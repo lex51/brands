@@ -2,6 +2,7 @@ from sqlalchemy import Column, String, DateTime, Enum, Boolean, Float
 from sqlalchemy import func
 import enum
 
+from pydantic import Field
 
 from db import Base
 
@@ -24,9 +25,6 @@ class ItemStore(Base):
     parse_date = Column(DateTime(timezone=True), server_default=func.now())
     participants_have = Column(Boolean)
     new_price = Column(Float)
-
-
-from pydantic import Field
 
 
 class ItemSchema(BaseModel):

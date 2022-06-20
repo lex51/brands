@@ -8,7 +8,7 @@ wb_obj = openpyxl.load_workbook(xlsx_file)
 # Read the active sheet:
 sheet = wb_obj.active
 
-for row in sheet.iter_rows(1):
+for row in sheet.iter_rows(2):
     print(row[0].value, row[1].value, row[2].value)
 
     r = requests.post(
@@ -22,3 +22,4 @@ for row in sheet.iter_rows(1):
         ),
     )
     print(r.status_code)
+

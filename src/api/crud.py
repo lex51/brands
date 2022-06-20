@@ -10,6 +10,8 @@ class ItemDAL:
         self.db_session = db_session
 
     async def save_item(self, payload: ItemSchema) -> ItemDB:
+        """
+        save item record"""
         new_item = ItemStore(
             strategy=payload.strategy,
             articul=payload.articul,
@@ -45,6 +47,8 @@ class ItemDAL:
         participants_have: Optional[str] = None,
         new_price: Optional[int] = None,
     ):
+        """
+        update record in DB"""
         q = update(ItemStore).where(ItemStore.articul == articul)
         if participants:
             q = q.values(participants=participants)
@@ -52,7 +56,6 @@ class ItemDAL:
             q = q.values(participants_have=participants_have)
         if new_price:
             q = q.values(new_price=new_price)
-        print(q)
         q.execution_options(synchronize_session="fetch")
 
         await self.db_session.execute(q)
