@@ -11,10 +11,10 @@ class ItemDAL:
 
     async def save_item(self, payload: ItemSchema) -> ItemDB:
         new_item = ItemStore(
-            strategy=payload.strategy, 
+            strategy=payload.strategy,
             articul=payload.articul,
-            participants=payload.participants
-            )
+            participants=payload.participants,
+        )
 
         self.db_session.add(new_item)
         await self.db_session.flush()
@@ -26,7 +26,6 @@ class ItemDAL:
         q = await self.db_session.execute(select(ItemStore))
         return q.scalars().all()
 
-
     async def get_articuls(self):
         """
         return only list articuls"""
@@ -34,11 +33,18 @@ class ItemDAL:
         return [i[0] for i in q.all()]
 
     async def get_item_by_id(self, articul):
-        q = await self.db_session.execute(select(ItemStore).where(ItemStore.articul==articul))
+        q = await self.db_session.execute(
+            select(ItemStore).where(ItemStore.articul == articul)
+        )
         return q.one()
 
-
-    async def update_item(self, articul: str, participants: Optional[str] = None, participants_have: Optional[str]=None, new_price: Optional[int] = None):
+    async def update_item(
+        self,
+        articul: str,
+        participants: Optional[str] = None,
+        participants_have: Optional[str] = None,
+        new_price: Optional[int] = None,
+    ):
         q = update(ItemStore).where(ItemStore.articul == articul)
         if participants:
             q = q.values(participants=participants)
@@ -49,4 +55,4 @@ class ItemDAL:
         print(q)
         q.execution_options(synchronize_session="fetch")
 
-        await  self.db_session.execute(q)
+        await self.db_session.execute(q)

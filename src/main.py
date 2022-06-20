@@ -67,9 +67,9 @@ async def save_item(payload: ItemSchema):
             item_dal = ItemDAL(session)
             item = await item_dal.save_item(payload)
 
-            response_obj: ItemDB = {
-            }
+            response_obj: ItemDB = {}
             return response_obj
+
 
 @app.get("/get_items")
 async def get_all_items():
@@ -82,6 +82,7 @@ async def get_all_items():
             items = item_dal.get_all_items()
             return await items
 
+
 @app.get("/get_articuls")
 async def get_articuls():
     """
@@ -92,8 +93,10 @@ async def get_articuls():
             item_dal = ItemDAL(session)
             items = item_dal.get_articuls()
             return await items
+
+
 @app.get("/get_item_by_articul")
-async def get_item_by_articul(articul:str):
+async def get_item_by_articul(articul: str):
     async with async_session() as session:
         async with session.begin():
 
@@ -101,13 +104,12 @@ async def get_item_by_articul(articul:str):
             item = item_dal.get_item_by_id(articul=articul)
             return await item
 
+
 @app.get("/update_item_info")
-async def update_item_unfo(articul:str):
+async def update_item_unfo(articul: str):
     """
     update item info by articul"""
     await update_item_data(articul)
-
-
 
 
 @app.on_event("startup")

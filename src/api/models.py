@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, DateTime, Enum, Boolean, Float
 from sqlalchemy import func
-import  enum
+import enum
 
 
 from db import Base
@@ -9,9 +9,11 @@ from pydantic import BaseModel
 
 # SQLAlchemy
 
+
 class StratChoice(enum.Enum):
     EDLP = "EDLP"
     AVERAGE = "AVERAGE"
+
 
 class ItemStore(Base):
     __tablename__ = "Items"
@@ -29,17 +31,14 @@ from pydantic import Field
 
 class ItemSchema(BaseModel):
 
-    articul:str = Field()
-    strategy:StratChoice = Field()
-    participants:str = Field()
-
+    articul: str = Field()
+    strategy: StratChoice = Field()
+    participants: str = Field()
 
 
 class ItemDB(ItemSchema):
     pass
 
 
-
 class ItemDB(ItemSchema):
     id: int
-
